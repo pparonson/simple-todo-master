@@ -1,7 +1,7 @@
 import React from 'react';
 import FetchApi from '../fetch-api';
 
-const ENTER_KEY_CODE = 13;
+const ENTER_KEY_CODE = 13; // return / enter keyCode
 
 export default class TodoApp extends React.Component {
 	state = { todos: [], newText: '' };
@@ -47,6 +47,7 @@ export default class TodoApp extends React.Component {
 
 	handleKeyDown = e => {
 		if (e.keyCode !== ENTER_KEY_CODE) return;
+		// if keyCode = "Enter" call createTodo()
 		this.createTodo();
 	};
 
