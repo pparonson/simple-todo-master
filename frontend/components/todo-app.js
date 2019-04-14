@@ -31,19 +31,36 @@ export default class TodoApp extends React.Component {
 
 	handleDeleteRequest = (id) => {
 		FetchApi
-			.post(`/todo/${id}`, { text: this.state.newText })
+			.delete(`/todo/${id}`)
 			.then(() => {
 				const newTodos = Array.from(this.state.todos);
 				const todoIndex = newTodos.findIndex(todo => todo.id.toString() === id.toString());
-
 				// Note: This method changes the original array.
-				newTodos.splice(todoIndex, 1, completedTodo);
+				newTodos.splice(todoIndex, 1);
 				this.setState({ todos: newTodos });
 			})
 			.catch(() => alert('Error removing todo'));
 	};
 
+	// marked completed status feature
+	handleMarkStatusRequest = (id) => {
+		FetchApi
+			.post(`/todo/${id}`, { text: this.state.newText })
+			.then(() => {
+				let newTodos = Array.from(this.state.todos);
+				const todoIndex = newTodos.findIndex(todo => todo.id.toString() === id.toString());
 
+				const completedTodo = newTodos[todoIndex].strike();
+
+				// NOTE:  I think since all of the mutated array state is occurring
+				// inside the handleMarkStatusRequest fn on the newTodos this type of
+				// mutation should be okay
+				newTodos.splice(todoIndex, 1, completedTodo);
+				// newTodos[todoIndex] = completedTodo;
+				this.setState({ todos: newTodos });
+			})
+			.catch(() => alert('Error marking todo status'));
+	};
 
 	handleChange = e => {
 		this.setState({ newText: e.target.value });
@@ -73,7 +90,9 @@ export default class TodoApp extends React.Component {
 							<div className="view">
 								<label>{todo.text}</label>
 								<button onClick={() => this.handleDeleteRequest(todo.id)}>Remove Todo</button>
-
+								<button onClick={() => this.handleMarkStatusRequest(todo.id)}>
+									Edit Todo Status
+								</button>
 							</div>
 						</li>
 					))}
