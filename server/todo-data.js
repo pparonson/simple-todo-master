@@ -2,6 +2,7 @@ let todosCreated = 1;
 let todos = [{
 	id: 1,
 	text: 'Finish coding exercise',
+	completed: false
 }];
 
 export default class TodoData {

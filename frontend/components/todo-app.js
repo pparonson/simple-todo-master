@@ -4,7 +4,7 @@ import FetchApi from '../fetch-api';
 const ENTER_KEY_CODE = 13;
 
 export default class TodoApp extends React.Component {
-	state = { todos: [], newText: '' };
+	state = { todos: [], newText: '', completed: false };
 
 	constructor(props) {
 		super(props);
@@ -20,11 +20,12 @@ export default class TodoApp extends React.Component {
 
 	createTodo = () => {
 		FetchApi
-			.post('/todo', { text: this.state.newText })
+			.post('/todo', { text: this.state.newText, completed: this.state.completed })
 			.then((newTodo) => {
 				const newTodos = Array.from(this.state.todos);
+				console.log(newTodo);
 				newTodos.push(newTodo);
-				this.setState({ todos: newTodos, newText: '' });
+				this.setState({ todos: newTodos, newText: '', completed: false });
 			})
 			.catch(() => alert('There was an error creating the todo'));
 	};
