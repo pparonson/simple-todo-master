@@ -8,6 +8,5 @@ todoExpress.delete('/todo/:id', (req, res) => TodoData.delete(req.params.id).the
 
 // TODO: Implement
 todoExpress.put('/todo/:id', (req, res) => res.sendStatus(501));
-// todoExpress.post('/todo/:id', (req, res) => TodoData.create(req.body).then(todo => res.json(todo)).catch((err) => res.status(500).json(err)));
 
 export default todoExpress;

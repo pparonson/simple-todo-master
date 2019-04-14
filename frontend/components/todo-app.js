@@ -35,6 +35,7 @@ export default class TodoApp extends React.Component {
 			.then(() => {
 				const newTodos = Array.from(this.state.todos);
 				const todoIndex = newTodos.findIndex(todo => todo.id.toString() === id.toString());
+				const completedTodo = newTodos[todoIndex].strike();
 				// Note: This method changes the original array.
 				newTodos.splice(todoIndex, 1);
 				this.setState({ todos: newTodos });
@@ -45,7 +46,7 @@ export default class TodoApp extends React.Component {
 	// marked completed status feature
 	handleMarkStatusRequest = (id) => {
 		FetchApi
-			.post(`/todo/${id}`, { text: this.state.newText })
+			.put(`/todo/${id}`)
 			.then(() => {
 				let newTodos = Array.from(this.state.todos);
 				const todoIndex = newTodos.findIndex(todo => todo.id.toString() === id.toString());
@@ -90,9 +91,7 @@ export default class TodoApp extends React.Component {
 							<div className="view">
 								<label>{todo.text}</label>
 								<button onClick={() => this.handleDeleteRequest(todo.id)}>Remove Todo</button>
-								<button onClick={() => this.handleMarkStatusRequest(todo.id)}>
-									Edit Todo Status
-								</button>
+
 							</div>
 						</li>
 					))}
