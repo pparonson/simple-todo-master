@@ -31,15 +31,19 @@ export default class TodoApp extends React.Component {
 
 	handleDeleteRequest = (id) => {
 		FetchApi
-			.delete(`/todo/${id}`)
+			.post(`/todo/${id}`, { text: this.state.newText })
 			.then(() => {
 				const newTodos = Array.from(this.state.todos);
 				const todoIndex = newTodos.findIndex(todo => todo.id.toString() === id.toString());
-				newTodos.splice(todoIndex, 1);
+
+				// Note: This method changes the original array.
+				newTodos.splice(todoIndex, 1, completedTodo);
 				this.setState({ todos: newTodos });
 			})
 			.catch(() => alert('Error removing todo'));
 	};
+
+
 
 	handleChange = e => {
 		this.setState({ newText: e.target.value });
@@ -49,6 +53,7 @@ export default class TodoApp extends React.Component {
 		if (e.keyCode !== ENTER_KEY_CODE) return;
 		// if keyCode = "Enter" call createTodo()
 		this.createTodo();
+		// consider re-calculating completed and pending todos here
 	};
 
 	render() {
@@ -68,6 +73,7 @@ export default class TodoApp extends React.Component {
 							<div className="view">
 								<label>{todo.text}</label>
 								<button onClick={() => this.handleDeleteRequest(todo.id)}>Remove Todo</button>
+
 							</div>
 						</li>
 					))}
