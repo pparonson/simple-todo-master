@@ -21,12 +21,11 @@ export default class FetchApi {
 		});
 	}
 
-	static put(path) {
-		// TODO: Implement
+	static put(path, body) {
 		return fetch(path, {
 			method: 'PUT',
 			headers: { 'Content-Type': 'application/json' },
-			// body: JSON.stringify(body),
+			body: JSON.stringify(body),
 		}).then(response => response.json());
 		// throw new Error('Not Implemented');
 	}

@@ -30,18 +30,13 @@ export default class TodoData {
 		})
 	}
 
-	static update(id, todo) {
+	static update(id, item) {
 		return new Promise((resolve, reject) => {
 			const todoIndex = todos.findIndex(todo => todo.id.toString() === id.toString());
 			if (todoIndex < 0 || todoIndex >= todos.length) return reject();
-			console.log(` req.params.id: ${req.params.id}, req.body: ${JSON.stringify(req.body, null, 2)}`)
-			const newTodo = {
-				...newTodos[todoIndex],
-				completed: todo.completed
-			}
-			console.log(`todoData2: todo: ${JSON.stringify(newTodo, null, 2)}`);
+			const newTodo = {...todos[todoIndex], completed: item.completed}
+			const newTodos = todos.splice(todoIndex, 1, newTodo);
 			resolve(newTodo)
-
 		})
 	}
 }

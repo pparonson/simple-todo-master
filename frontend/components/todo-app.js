@@ -35,9 +35,8 @@ export default class TodoApp extends React.Component {
 		const newState = newTodos[todoIndex].completed = !(newTodos[todoIndex].completed);
 
 		FetchApi
-			.post('/todo/:id', { completed: newState })
+			.put(`/todo/${id}`, { completed: newState })
 			.then((todo) => {
-				console.log(`AFTER SERVER UPDATE: FetchApi: newTodo: ${JSON.stringify(todo, null, 2)}`);
 				newTodos.splice(todoIndex, 1, todo);
 				this.setState({ todos: newTodos });
 			})
@@ -53,10 +52,32 @@ export default class TodoApp extends React.Component {
 		this.createTodo();
 	};
 
+	toggleCompleted = (todo) => {
+		if (todo.completed) {
+				return "(x) " + todo.text + " ";
+		} else {
+				return "( ) " + todo.text + " ";
+		}
+	}
+
+	calculateCompleted = (todos) => {
+		const count =  todos.filter(item => item.completed === true).length
+		console.log(`count: ${count}`);
+		return count
+	}
+
+	calculatePending = (todos) => {
+		const count =  todos.filter(item => item.completed === false).length
+		console.log(`count: ${count}`);
+		return count
+	}
+
 	render() {
 		return (
 			<div>
 				<h1>todos</h1>
+				<div>Completed: {this.calculateCompleted(this.state.todos)}</div>
+				<div>Pending: {this.calculatePending(this.state.todos)}</div>
 				<input
 					autoFocus
 					onChange={this.handleChange}
@@ -65,15 +86,18 @@ export default class TodoApp extends React.Component {
 					value={this.state.newText}
 				/>
 				<ul>
-					{this.state.todos.map(todo => (
-						<li key={todo.id}>
-							<div className="view">
-								<span onClick={() => this.handleToggleCompletedRequest(todo.id)}>( )</span>
-								<label>{todo.text}</label>
-								<button >Remove Todo</button>
-							</div>
-						</li>
-					))}
+					{this.state.todos.map(todo => {
+
+							return (
+								<li key={todo.id}>
+									<div className="view">
+										<span ></span>
+										<label onClick={() => this.handleToggleCompletedRequest(todo.id)}>{this.toggleCompleted(todo)}</label>
+									</div>
+								</li>
+							)
+						})
+					}
 				</ul>
 			</div>
 		);
