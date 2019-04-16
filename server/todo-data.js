@@ -21,16 +21,27 @@ export default class TodoData {
 	static delete(id) {
 		return new Promise((resolve, reject) => {
 			const todoIndex = todos.findIndex(todo => todo.id.toString() === id.toString());
+			console.log(`todoIndex: ${todoIndex}`)
 			if (todoIndex < 0 || todoIndex >= todos.length) return reject();
-			todos.splice(todoIndex, 1);
+
+			const todoText = newTodos[todoIndex].text.strike()
+			todos.splice(todoIndex, 1, todoText);
 			resolve();
 		})
 	}
 
 	static update(id, todo) {
 		return new Promise((resolve, reject) => {
-			// TODO: Implement
-			reject('Not Implemented');
+			const todoIndex = todos.findIndex(todo => todo.id.toString() === id.toString());
+			if (todoIndex < 0 || todoIndex >= todos.length) return reject();
+			console.log(` req.params.id: ${req.params.id}, req.body: ${JSON.stringify(req.body, null, 2)}`)
+			const newTodo = {
+				...newTodos[todoIndex],
+				completed: todo.completed
+			}
+			console.log(`todoData2: todo: ${JSON.stringify(newTodo, null, 2)}`);
+			resolve(newTodo)
+
 		})
 	}
 }

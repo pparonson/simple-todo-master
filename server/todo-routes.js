@@ -8,5 +8,14 @@ todoExpress.delete('/todo/:id', (req, res) => TodoData.delete(req.params.id).the
 
 // TODO: Implement
 todoExpress.put('/todo/:id', (req, res) => res.sendStatus(501));
+todoExpress.post("/todo/:id", (req, res) => {
+  console.log(` req.params.id: ${req.params.id}, req.body: ${JSON.stringify(req.body, null, 2)}`)
+  TodoData.update(req.params.id, req.body)
+    .then(todo => {
+      console.log(` SERVER: TodoRoutes: todo: ${JSON.stringify(todo, null, 2)}`)
+      res.json(todo)
+    })
+    .catch(err => res.status(500).json(err))
+})
 
 export default todoExpress;

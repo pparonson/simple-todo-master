@@ -4,7 +4,7 @@ import FetchApi from '../fetch-api';
 const ENTER_KEY_CODE = 13;
 
 export default class TodoApp extends React.Component {
-	state = { todos: [], newText: '', completed: false };
+	state = { todos: [], newText: '', completed: 0, pending: 0 };
 
 	constructor(props) {
 		super(props);
@@ -20,23 +20,25 @@ export default class TodoApp extends React.Component {
 
 	createTodo = () => {
 		FetchApi
-			.post('/todo', { text: this.state.newText, completed: this.state.completed })
+			.post('/todo', { text: this.state.newText , completed: false })
 			.then((newTodo) => {
 				const newTodos = Array.from(this.state.todos);
-				console.log(newTodo);
 				newTodos.push(newTodo);
-				this.setState({ todos: newTodos, newText: '', completed: false });
+				this.setState({ todos: newTodos, newText: '' });
 			})
 			.catch(() => alert('There was an error creating the todo'));
 	};
 
-	handleDeleteRequest = (id) => {
+	handleToggleCompletedRequest = (id) => {
+		const newTodos = this.state.todos
+		const todoIndex = newTodos.findIndex(todo => todo.id.toString() === id.toString());
+		const newState = newTodos[todoIndex].completed = !(newTodos[todoIndex].completed);
+
 		FetchApi
-			.delete(`/todo/${id}`)
-			.then(() => {
-				const newTodos = Array.from(this.state.todos);
-				const todoIndex = newTodos.findIndex(todo => todo.id.toString() === id.toString());
-				newTodos.splice(todoIndex, 1);
+			.post('/todo/:id', { completed: newState })
+			.then((todo) => {
+				console.log(`AFTER SERVER UPDATE: FetchApi: newTodo: ${JSON.stringify(todo, null, 2)}`);
+				newTodos.splice(todoIndex, 1, todo);
 				this.setState({ todos: newTodos });
 			})
 			.catch(() => alert('Error removing todo'));
@@ -66,8 +68,9 @@ export default class TodoApp extends React.Component {
 					{this.state.todos.map(todo => (
 						<li key={todo.id}>
 							<div className="view">
+								<span onClick={() => this.handleToggleCompletedRequest(todo.id)}>( )</span>
 								<label>{todo.text}</label>
-								<button onClick={() => this.handleDeleteRequest(todo.id)}>Remove Todo</button>
+								<button >Remove Todo</button>
 							</div>
 						</li>
 					))}
