@@ -5,6 +5,8 @@ let todos = [{
 	completed: false
 }];
 
+// the app could be improved with some persistent data store
+
 export default class TodoData {
 	static create(todo) {
 		return new Promise((resolve) => {

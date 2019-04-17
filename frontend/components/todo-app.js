@@ -55,6 +55,10 @@ export default class TodoApp extends React.Component {
 			.catch(() => alert('Error removing todo'));
 	};
 
+	// the app could be improved with a hander to allow the user to edit a todo text inline
+
+	// the app could be improved with the hander restored to allow the user to delete a todo inline
+
 	handleChange = e => {
 		this.setState({ newText: e.target.value });
 	};
@@ -93,6 +97,8 @@ export default class TodoApp extends React.Component {
 				/>
 				<ul>
 					{this.state.todos.map(todo => {
+							// the toggle completed status could be improved with some icons
+							// and possible strike-through text
 							return (
 								<li key={todo.id}>
 									<div className="view">
