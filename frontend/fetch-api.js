@@ -14,12 +14,12 @@ export default class FetchApi {
 		}).then(response => response.json());
 	}
 
-	static delete(path) {
-		return fetch(path, {
-			method: 'DELETE',
-			headers: { 'Content-Type': 'application/json' },
-		});
-	}
+	// static delete(path) {
+	// 	return fetch(path, {
+	// 		method: 'DELETE',
+	// 		headers: { 'Content-Type': 'application/json' },
+	// 	});
+	// }
 
 	static put(path, body) {
 		return fetch(path, {

@@ -18,17 +18,17 @@ export default class TodoData {
 		return new Promise((resolve) => resolve(todos));
 	}
 
-	static delete(id) {
-		return new Promise((resolve, reject) => {
-			const todoIndex = todos.findIndex(todo => todo.id.toString() === id.toString());
-			console.log(`todoIndex: ${todoIndex}`)
-			if (todoIndex < 0 || todoIndex >= todos.length) return reject();
-
-			const todoText = newTodos[todoIndex].text.strike()
-			todos.splice(todoIndex, 1, todoText);
-			resolve();
-		})
-	}
+	// static delete(id) {
+	// 	return new Promise((resolve, reject) => {
+	// 		const todoIndex = todos.findIndex(todo => todo.id.toString() === id.toString());
+	// 		console.log(`todoIndex: ${todoIndex}`)
+	// 		if (todoIndex < 0 || todoIndex >= todos.length) return reject();
+	//
+	// 		const todoText = newTodos[todoIndex].text.strike()
+	// 		todos.splice(todoIndex, 1, todoText);
+	// 		resolve();
+	// 	})
+	// }
 
 	static update(id, item) {
 		return new Promise((resolve, reject) => {
