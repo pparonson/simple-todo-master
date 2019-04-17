@@ -30,12 +30,12 @@ export default class TodoApp extends React.Component {
 	};
 
 	handleToggleCompletedRequest = (id) => {
-		const newTodos = this.state.todos
+		const newTodos = Array.from(this.state.todos);
 		const todoIndex = newTodos.findIndex(todo => todo.id.toString() === id.toString());
-		const newState = newTodos[todoIndex].completed = !(newTodos[todoIndex].completed);
+		const toggleState = newTodos[todoIndex].completed = !(newTodos[todoIndex].completed);
 
 		FetchApi
-			.put(`/todo/${id}`, { completed: newState })
+			.put(`/todo/${id}`, { completed: toggleState })
 			.then((todo) => {
 				newTodos.splice(todoIndex, 1, todo);
 				this.setState({ todos: newTodos });
@@ -52,7 +52,7 @@ export default class TodoApp extends React.Component {
 		this.createTodo();
 	};
 
-	toggleCompleted = (todo) => {
+	showToggle = (todo) => {
 		if (todo.completed) {
 				return "(x) " + todo.text + " ";
 		} else {
@@ -60,24 +60,18 @@ export default class TodoApp extends React.Component {
 		}
 	}
 
-	calculateCompleted = (todos) => {
-		const count =  todos.filter(item => item.completed === true).length
+	sumCompleted = (todos, bool) => {
+		const count =  todos.filter(item => item.completed === bool).length;
 		console.log(`count: ${count}`);
-		return count
-	}
-
-	calculatePending = (todos) => {
-		const count =  todos.filter(item => item.completed === false).length
-		console.log(`count: ${count}`);
-		return count
+		return count;
 	}
 
 	render() {
 		return (
 			<div>
 				<h1>todos</h1>
-				<div>Completed: {this.calculateCompleted(this.state.todos)}</div>
-				<div>Pending: {this.calculatePending(this.state.todos)}</div>
+				<div>Completed: {this.sumCompleted(this.state.todos, true)}</div>
+				<div>Pending: {this.sumCompleted(this.state.todos, false)}</div>
 				<input
 					autoFocus
 					onChange={this.handleChange}
@@ -87,12 +81,10 @@ export default class TodoApp extends React.Component {
 				/>
 				<ul>
 					{this.state.todos.map(todo => {
-
 							return (
 								<li key={todo.id}>
 									<div className="view">
-										<span ></span>
-										<label onClick={() => this.handleToggleCompletedRequest(todo.id)}>{this.toggleCompleted(todo)}</label>
+										<label onClick={() => this.handleToggleCompletedRequest(todo.id)}>{this.showToggle(todo)}</label>
 									</div>
 								</li>
 							)
