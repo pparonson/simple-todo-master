@@ -1,0 +1,10 @@
+version: "3"
+
+# services define types of containers
+# docker-compose automatically networks defined containers
+services:
+  node-app:
+    restart: always
+    build: ./
+    ports:
+      - "3001:3001"
