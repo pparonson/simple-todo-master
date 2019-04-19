@@ -1,11 +1,10 @@
+
 let todosCreated = 1;
 let todos = [{
 	id: 1,
 	text: 'Finish coding exercise',
 	completed: false
 }];
-
-// the app could be improved with some persistent data store
 
 export default class TodoData {
 	static create(todo) {

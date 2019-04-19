@@ -4,7 +4,8 @@
     "node": ">=10"
   },
   "scripts": {
-    "start": "babel-node ./server/index.js"
+    "start": "babel-node ./server/index.js",
+    "test": "mocha -R min --require @babel/register"
   },
   "dependencies": {
     "@babel/core": "^7.1.0",
@@ -16,6 +17,7 @@
     "babel-loader": "^8.0.2",
     "body-parser": "^1.18.3",
     "express": "^4.16.3",
+    "mongoose": "^5.5.2",
     "prop-types": "^15.6.2",
     "react": "^16.5.2",
     "react-dom": "^16.5.2",
@@ -25,6 +27,8 @@
     "whatwg-fetch": "^3.0.0"
   },
   "devDependencies": {
-    "@babel/node": "^7.0.0"
+    "@babel/node": "^7.0.0",
+    "@babel/register": "^7.4.0",
+    "mocha": "^6.1.4"
   }
 }
