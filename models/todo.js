@@ -3,7 +3,13 @@ import mongoose from "mongoose"
 const {Schema} = mongoose
 
 const TodoSchema = new Schema({
-	text: String
+	text: {
+		type: String
+	},
+	isCompleted: {
+		type: Boolean,
+		default: false
+	}
 })
 
 // Todo represents the entire collection

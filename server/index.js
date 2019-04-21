@@ -1,9 +1,11 @@
-import express from 'express';
 import path from 'path';
+
+import express from 'express';
 import webpack from 'webpack';
 import WebpackDevServer from 'webpack-dev-server';
 import bodyParser from 'body-parser';
 import TodoRoutes from './todo-routes';
+import mongoose from "mongoose"
 
 const APP_PORT = 3001;
 
@@ -33,6 +35,10 @@ const app = new WebpackDevServer(compiler, {
 	publicPath: '/frontend/',
 	stats: {colors: true},
 });
+
+if (process.env.NODE_ENV !== "test") {
+  mongoose.connect("mongodb://localhost/simple-todo", { useNewUrlParser: true })
+}
 
 app.use(bodyParser.json());
 app.use('/', express.static(path.resolve(__dirname, '../public')));

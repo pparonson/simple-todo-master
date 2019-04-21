@@ -1,5 +1,5 @@
 import assert from "assert"
-import Todo from "../server/todo"
+import Todo from "../models/todo"
 
 describe("reading todos", () => {
   // set var scope here to make avail for it() fns

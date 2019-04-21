@@ -1,5 +1,5 @@
 import assert from "assert"
-import Todo from "../server/todo"
+import Todo from "../models/todo"
 
 describe("updating todos", () => {
   let newTodo
@@ -11,8 +11,8 @@ describe("updating todos", () => {
       .then( () => done() )
   })
 
-  it("set and save a todo model instance", done => {
-    newTodo.set("text", "setting the update")
+  it("sets and saves a todo model instance", done => {
+    newTodo.set("text", "setting the instance update")
     newTodo
       .save()
       .then(() => {
@@ -22,10 +22,26 @@ describe("updating todos", () => {
           // find returns all users and allows chaining of then() promise
           .then(todos => {
             assert(todos.length === 1)
-            assert(todos[0].text === "setting the update")
+            assert(todos[0].text === "setting the instance update")
             done()
           })
       })
-
   })
+
+  it("updates a class", done => {
+    Todo
+      // old --> new
+      .update({text: /.*mocha.*/i}, {text: "updating via Todo class"})
+      .then(() => {
+        Todo
+          .find({})
+          .then(todos => {
+            assert(todos.length === 1)
+            console.log(todos[0].text)
+            assert(todos[0].text === "updating via Todo class")
+            done()
+          })
+      })
+  })
+
 })

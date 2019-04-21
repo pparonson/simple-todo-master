@@ -4,8 +4,8 @@
     "node": ">=10"
   },
   "scripts": {
-    "start": "babel-node ./server/index.js",
-    "test": "mocha -R min --require @babel/register"
+    "start": "NODE_ENV=dev babel-node ./server/index.js",
+    "test": "NODE_ENV=test mocha -R min --require @babel/register"
   },
   "dependencies": {
     "@babel/core": "^7.1.0",

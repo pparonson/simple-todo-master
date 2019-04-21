@@ -8,8 +8,8 @@ before(done => {
       done()
     })
     .on( "error", e => console.warn("Error: ", e) )
-    
-})
+
+})  
 
 // hook to execute before test suites and empty db
 beforeEach(done => {

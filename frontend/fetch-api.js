@@ -4,7 +4,10 @@ export default class FetchApi {
 			method: 'POST',
 			headers: { 'Content-Type': 'application/json' },
 			body: JSON.stringify(body),
-		}).then(response => response.json());
+		}).then(response => {
+			console.log(`response: ${JSON.stringify(response, null, 2)}`);
+			response.json()
+		});
 	}
 
 	static get(path) {

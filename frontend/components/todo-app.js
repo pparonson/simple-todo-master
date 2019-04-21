@@ -20,7 +20,7 @@ export default class TodoApp extends React.Component {
 
 	createTodo = () => {
 		FetchApi
-			.post('/todo', { text: this.state.newText , completed: false })
+			.post('/todo', { text: this.state.newText , isCompleted: false })
 			.then((newTodo) => {
 				const newTodos = Array.from(this.state.todos);
 				newTodos.push(newTodo);
@@ -69,7 +69,7 @@ export default class TodoApp extends React.Component {
 	};
 
 	showToggle = (todo) => {
-		if (todo.completed) {
+		if (todo.isCompleted) {
 				return "(x) " + todo.text + " ";
 		} else {
 				return "( ) " + todo.text + " ";
@@ -77,7 +77,9 @@ export default class TodoApp extends React.Component {
 	}
 
 	sumCompleted = (todos, bool) => {
-		const count =  todos.filter(item => item.completed === bool).length;
+		const count = todos.length !== 0 ?
+			todos.filter(item => item.isCompleted === bool).length : 0
+		console.log(`todos: ${JSON.stringify(todos, null, 2)}, bool: ${bool}`);
 		console.log(`count: ${count}`);
 		return count;
 	}

@@ -1,5 +1,5 @@
 import assert from "assert"
-import Todo from "../server/todo"
+import Todo from "../models/todo"
 
 describe("creating todos", () => {
   it("saves a todo", done => {
