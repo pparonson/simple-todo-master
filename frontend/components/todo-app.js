@@ -29,18 +29,6 @@ export default class TodoApp extends React.Component {
 			.catch(() => alert('There was an error creating the todo'));
 	};
 
-	// handleDeleteRequest = (id) => {
-	// 	FetchApi
-	// 		.delete(`/todo/${id}`)
-	// 		.then(() => {
-	// 			const newTodos = Array.from(this.state.todos);
-	// 			const todoIndex = newTodos.findIndex(todo => todo.id.toString() === id.toString());
-	// 			newTodos.splice(todoIndex, 1);
-	// 			this.setState({ todos: newTodos });
-	// 		})
-	// 		.catch(() => alert('Error removing todo'));
-	// };
-
 	handleToggleCompletedRequest = (id) => {
 		const newTodos = Array.from(this.state.todos);
 		const todoIndex = newTodos.findIndex(todo => todo.id.toString() === id.toString());
