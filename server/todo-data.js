@@ -23,11 +23,8 @@ export default class TodoData {
 	// static delete(id) {
 	// 	return new Promise((resolve, reject) => {
 	// 		const todoIndex = todos.findIndex(todo => todo.id.toString() === id.toString());
-	// 		console.log(`todoIndex: ${todoIndex}`)
 	// 		if (todoIndex < 0 || todoIndex >= todos.length) return reject();
-	//
-	// 		const todoText = newTodos[todoIndex].text.strike()
-	// 		todos.splice(todoIndex, 1, todoText);
+	// 		todos.splice(todoIndex, 1);
 	// 		resolve();
 	// 	})
 	// }
